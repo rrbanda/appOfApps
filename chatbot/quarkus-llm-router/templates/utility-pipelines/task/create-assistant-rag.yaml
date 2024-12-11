@@ -60,9 +60,7 @@ spec:
           "displayName": "'"$DISPLAY_NAME"'",
           "description": "'"$DESCRIPTION"'",
           "llmConnectionId": "'"$LLM_CONNECTION_ID"'",
-          "retrieverConnectionId": "'"$RETRIEVER_CONNECTION_ID"'",
-          "userPrompt": "'"$USER_PROMPT"'",
-          "exampleQuestions": "'"$EXAMPLE_QUESTION"'"
+          "retrieverConnectionId": "'"$RETRIEVER_CONNECTION_ID"'"
         }'\'''
         
         echo "$curl_command"
