@@ -20,14 +20,6 @@ spec:
       type: string
       description: The ID of the retriever connection
       default: ""
-    - name: userPrompt
-      type: string
-      description: The user prompt
-      default: ""
-    - name: exampleQuestion
-      type: array
-      description: The example questions presented to the user
-      default: ["Ask me a question?"]
   steps:
     - name: curl-request
       image: registry.redhat.io/openshift4/ose-tools-rhel9:latest
@@ -46,12 +38,7 @@ spec:
         set -e
 
         export LLM_CONNECTION_ID=$(echo $LLM_CONNECTION_ID | tr -d '\n')
-        export RETRIEVER_CONNECTION_ID=$(echo $RETRIEVER_CONNECTION_ID | tr -d '\n')        
-
-        # Use the exampleQuestion parameter
-        EXAMPLE_QUESTION="$(params.exampleQuestion)"
-
-        echo "Example Question: $EXAMPLE_QUESTION"
+        export RETRIEVER_CONNECTION_ID=$(echo $RETRIEVER_CONNECTION_ID | tr -d '\n')  
 
         curl_command='curl -X POST "{{ .Values.name }}:8080/admin/assistant" \
         -H "Content-Type: application/json" \
