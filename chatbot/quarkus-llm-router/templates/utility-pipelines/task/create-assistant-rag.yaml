@@ -32,8 +32,6 @@ spec:
           value: "$(params.description)"
         - name: LLM_CONNECTION_ID
           value: "$(params.llmConnectionId)"
-        - name: USER_PROMPT
-          value: "$(params.userPrompt)"
       script: |
         set -e
 
