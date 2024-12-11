@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
-  name: create-assistant
+  name: create-assistant-rag
 spec:
   params:
     - name: name
@@ -20,6 +20,14 @@ spec:
       type: string
       description: The ID of the retriever connection
       default: ""
+    - name: userPrompt
+      type: string
+      description: The user prompt
+      default: ""
+    - name: exampleQuestion
+      type: array
+      description: The example questions presented to the user
+      default: ["Ask me a question?"]
   steps:
     - name: curl-request
       image: registry.redhat.io/openshift4/ose-tools-rhel9:latest
@@ -32,13 +40,18 @@ spec:
           value: "$(params.description)"
         - name: LLM_CONNECTION_ID
           value: "$(params.llmConnectionId)"
-        - name: RETRIEVER_CONNECTION_ID
-          value: "$(params.retrieverConnectionId)"
+        - name: USER_PROMPT
+          value: "$(params.userPrompt)"
       script: |
         set -e
 
         export LLM_CONNECTION_ID=$(echo $LLM_CONNECTION_ID | tr -d '\n')
         export RETRIEVER_CONNECTION_ID=$(echo $RETRIEVER_CONNECTION_ID | tr -d '\n')        
+
+        # Use the exampleQuestion parameter
+        EXAMPLE_QUESTION="$(params.exampleQuestion)"
+
+        echo "Example Question: $EXAMPLE_QUESTION"
 
         curl_command='curl -X POST "{{ .Values.name }}:8080/admin/assistant" \
         -H "Content-Type: application/json" \
@@ -47,7 +60,8 @@ spec:
           "displayName": "'"$DISPLAY_NAME"'",
           "description": "'"$DESCRIPTION"'",
           "llmConnectionId": "'"$LLM_CONNECTION_ID"'",
-          "retrieverConnectionId": "'"$RETRIEVER_CONNECTION_ID"'"
+          "userPrompt": "'"$USER_PROMPT"'",
+          "exampleQuestions": "'"$EXAMPLE_QUESTION"'"
         }'\'''
         
         echo "$curl_command"
