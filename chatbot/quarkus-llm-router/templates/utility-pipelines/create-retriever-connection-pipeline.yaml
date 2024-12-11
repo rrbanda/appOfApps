@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: create-assistant-rag-pipeline
+  name: create-retriever-connection
 spec:
   params:
     - name: rag_name
