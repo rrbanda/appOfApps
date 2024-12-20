@@ -1,4 +1,24 @@
 # Composer AI Gitops
+# AppOfApps Repository
+
+## Structure Overview
+- **Subdirectories**:
+  - `appOfApps`: Contains the root manifest for deploying other applications or services.
+  - `chatbot`: Represents an individual application or microservice.
+  - `data-ingestion`: Represents another application or microservice focused on data ingestion.
+  - `util`: Likely includes helper scripts or utilities for deployment automation or shared configurations.
+- **Files**:
+  - `README.md`: Documentation to guide usage and structure.
+  - `.gitignore`: Excludes unnecessary files during Git operations.
+
+## Usage in ArgoCD and OpenShift
+- **AppOfApps Pattern**:
+  - The repository organizes deployment manifests hierarchically.
+  - Enables managing multiple applications through a single parent manifest using ArgoCD.
+- **Benefits**:
+  - Modular design for deploying and managing OpenShift applications.
+  - Scalable workflows suited for microservice-based architecture.
+
 
 ## Description
 
